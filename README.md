@@ -1,4 +1,4 @@
-# Impulse
+# Orion
 A collection of common spigot methods and utilities that make creating spigot plugins easier
 
 # Info
