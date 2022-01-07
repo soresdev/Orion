@@ -1,0 +1,5 @@
+name: Orion
+main: me.sores.Orion.Orion
+version: 1.0 SNAPSHOT
+author: sores
+commands:
