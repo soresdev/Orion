@@ -13,3 +13,5 @@ A compiled JAR can be found in the releases section of the repo.
 - Scoreboard - https://github.com/ThatKawaiiSam
 - Various Implementations - https://github.com/LavaisWatery
 - Various Math Related (Essentials & WorldEdit)
+
+[![](https://jitpack.io/v/soresdev/Orion.svg)](https://jitpack.io/#soresdev/Orion)
