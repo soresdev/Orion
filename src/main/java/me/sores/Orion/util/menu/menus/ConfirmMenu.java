@@ -17,33 +17,26 @@ public class ConfirmMenu extends Menu {
     private String title;
     private TypeCallback<Boolean> response;
     private boolean closeAfterResponse;
-    private Button[] centerButtons;
+    private Button centerButton;
 
-    public ConfirmMenu(String title, TypeCallback<Boolean> response, boolean closeAfter, Button... centerButtons) {
+    public ConfirmMenu(String title, TypeCallback<Boolean> response, boolean closeAfter, Button centerButton) {
         this.title = title;
         this.response = response;
         this.closeAfterResponse = closeAfter;
-        this.centerButtons = centerButtons;
+        this.centerButton = centerButton;
     }
 
     @Override
     public Map<Integer, Button> getButtons(Player player) {
         HashMap<Integer, Button> buttons = new HashMap<>();
 
-        for (int x = 0; x < 3; x++) {
-            for (int y = 0; y < 3; y++) {
-                buttons.put(getSlot(x, y), new ConfirmationButton(true, response, closeAfterResponse));
-                buttons.put(getSlot(8 - x, y), new ConfirmationButton(false, response, closeAfterResponse));
-            }
+        for(int i = 0; i < 9; i++){
+            buttons.put(i, getPlaceholderButton());
         }
 
-        if (centerButtons != null) {
-            for (int i = 0; i < centerButtons.length; i++) {
-                if (centerButtons[i] != null) {
-                    buttons.put(getSlot(4, i), centerButtons[i]);
-                }
-            }
-        }
+        buttons.put(3, new ConfirmationButton(true, response, closeAfterResponse));
+        buttons.put(5, new ConfirmationButton(false, response, closeAfterResponse));
+        if(centerButton != null) buttons.put(4, centerButton);
 
         return buttons;
     }

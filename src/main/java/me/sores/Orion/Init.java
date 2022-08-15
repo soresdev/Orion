@@ -1,9 +1,9 @@
 package me.sores.Orion;
 
 import me.sores.Orion.commands.OrionCommand;
+import me.sores.Orion.handler.MenuHandler;
 import me.sores.Orion.util.ItemDB;
 import me.sores.Orion.util.abstr.AbstractInit;
-import me.sores.Orion.util.menu.MenuListener;
 import org.bukkit.plugin.Plugin;
 
 /**
@@ -27,11 +27,13 @@ public class Init extends AbstractInit {
     @Override
     public void initInstances() {
         itemDatabase = new ItemDB(Orion.getInstance());
+
+        initHandler(new MenuHandler(), true);
     }
 
     @Override
     public void registerEvents() {
-        registerListener(new MenuListener());
+
     }
 
     @Override

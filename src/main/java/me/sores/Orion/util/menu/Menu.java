@@ -1,5 +1,6 @@
 package me.sores.Orion.util.menu;
 
+import me.sores.Orion.handler.MenuHandler;
 import me.sores.Orion.util.StringUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -16,8 +17,6 @@ import java.util.Map;
  */
 public abstract class Menu {
 
-    public static Map<String, Menu> currentlyOpenedMenus = new HashMap<>();
-
     private Map<Integer, Button> buttons = new HashMap<>();
     private boolean autoUpdate = false;
     private boolean updateAfterClick = true;
@@ -25,7 +24,7 @@ public abstract class Menu {
     private boolean placeholder = false;
     private Button placeholderButton = Button.placeholder(Material.STAINED_GLASS_PANE, (byte) 15, " ");
 
-    private ItemStack createItemStack(Player player, Button button) {
+    public ItemStack createItemStack(Player player, Button button) {
         ItemStack item = button.getButtonItem(player);
 
         if (item.getType() != Material.SKULL_ITEM) {
@@ -44,7 +43,7 @@ public abstract class Menu {
     public void openMenu(final Player player) {
         this.buttons = this.getButtons(player);
 
-        Menu previousMenu = Menu.currentlyOpenedMenus.get(player.getName());
+        Menu previousMenu = MenuHandler.getInstance().getOpenMenus().get(player.getUniqueId());
         Inventory inventory = null;
         int size = this.getSize() == -1 ? this.size(this.buttons) : this.getSize();
         boolean update = false;
@@ -76,7 +75,7 @@ public abstract class Menu {
 
         inventory.setContents(new ItemStack[inventory.getSize()]);
 
-        currentlyOpenedMenus.put(player.getName(), this);
+        MenuHandler.getInstance().getOpenMenus().put(player.getUniqueId(), this);
 
         for (Map.Entry<Integer, Button> buttonEntry : this.buttons.entrySet()) {
             inventory.setItem(buttonEntry.getKey(), createItemStack(player, buttonEntry.getValue()));
@@ -133,14 +132,6 @@ public abstract class Menu {
 
     public Map<Integer, Button> getButtons() {
         return buttons;
-    }
-
-    public static Map<String, Menu> getCurrentlyOpenedMenus() {
-        return currentlyOpenedMenus;
-    }
-
-    public static void setCurrentlyOpenedMenus(Map<String, Menu> currentlyOpenedMenus) {
-        Menu.currentlyOpenedMenus = currentlyOpenedMenus;
     }
 
     public void setButtons(Map<Integer, Button> buttons) {

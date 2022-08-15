@@ -1,5 +1,6 @@
 package me.sores.Orion.util.menu.buttons;
 
+import me.sores.Orion.handler.MenuHandler;
 import me.sores.Orion.util.TypeCallback;
 import me.sores.Orion.util.menu.Button;
 import me.sores.Orion.util.menu.Menu;
@@ -39,14 +40,10 @@ public class ConfirmationButton extends Button {
 
     @Override
     public void clicked(Player player, ClickType clickType) {
-        if (this.confirm) {
-            player.playSound(player.getLocation(), Sound.NOTE_PIANO, 20f, 0.1f);
-        } else {
-            player.playSound(player.getLocation(), Sound.DIG_GRAVEL, 20f, 0.1F);
-        }
+        if(this.confirm) player.playSound(player.getLocation(), Sound.LEVEL_UP, 2F, 0.90f);
 
         if (this.closeAfterResponse) {
-            Menu menu = Menu.currentlyOpenedMenus.get(player.getName());
+            Menu menu = MenuHandler.getInstance().getOpenMenus().get(player.getUniqueId());
 
             if (menu != null) {
                 menu.setClosedByMenu(true);
